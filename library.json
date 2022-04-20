@@ -1,0 +1,26 @@
+{
+    "name": "ad5243",
+    "version": "0.1.0",
+    "description": "Arduino library to control the AD5243 family of digitial potentiometers / rheostats",
+    "keywords": [
+        "io"
+    ],
+    "repository":
+    {
+        "type": "git",
+        "url": "https://github.com/dok-net/ad5243"
+    },
+    "authors": [
+        {
+            "name": "Dirk O. Kaar"
+        },
+        {
+            "name": "Justin Decker"
+        }
+    ],
+    "license": "MIT",
+    "frameworks": "arduino",
+    "platforms": [
+        "espressif8266", "espressif32"
+    ]
+}
