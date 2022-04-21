@@ -19,7 +19,10 @@
  *
  * Datasheet: https://www.analog.com/en/products/ad5243.html
  * Resistance set is measured between B1 and W1 for channel 0, and B2 and W2 for channel 1
- * */
+ */
+
+#ifndef __ad5243_h
+#define __ad5243_h
 
 #include <Wire.h>
 
@@ -29,17 +32,20 @@ class AD5243
 {
 private:
 	uint8_t _address;
-	TwoWire &_i2cPort;
-	long _resistance;
-	long _total_resistance;
+	TwoWire& _i2cPort;
+	// according to datasheet, Rwiper is typical 160 ohm, max. 200 ohm
+	const long _wiper_resistance;
+	const long _nominal_resistance;
+	uint8_t channel1Data = 0x80;
+	uint8_t channel2Data = 0x80;
 
 public:
-	uint32_t channel1Resistance;
-	uint32_t channel2Resistance;
-
-	AD5243(long total_resistance, TwoWire &wirePort = Wire) : _i2cPort(wirePort)
+	AD5243(long nominal_resistance, TwoWire& i2cPort = Wire) : _nominal_resistance(nominal_resistance), _wiper_resistance(160), _i2cPort(i2cPort)
 	{
-		_total_resistance = total_resistance;
+	}
+
+	AD5243(long nominal_resistance, long wiper_resistance, TwoWire& i2cPort = Wire) : _nominal_resistance(nominal_resistance), _wiper_resistance(wiper_resistance), _i2cPort(i2cPort)
+	{
 	}
 
 	bool begin(uint8_t address = AD5243_I2C_ADDRESS)
@@ -50,7 +56,33 @@ public:
 
 	bool connected();
 
-	bool setResistance(uint8_t channel, long resistance);
+	uint8_t getchannel1Data()
+	{
+		return channel1Data;
+	}
+
+	uint8_t getchannel2Data()
+	{
+		return channel2Data;
+	}
+
+	uint8_t getChannel1Resistance()
+	{
+		return computedResistance(channel1Data);
+	}
+
+	uint8_t getChannel2Resistance()
+	{
+		return computedResistance(channel2Data);
+	}
+
+	uint32_t computedResistance(const uint8_t data);
+
+	bool setData(uint8_t channel, uint8_t data);
+
+	bool setResistance(uint8_t channel, const long resistance);
 
 	uint8_t readControlRegister();
 };
+
+#endif // __ad5243_h
