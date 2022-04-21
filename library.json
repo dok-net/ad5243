@@ -1,7 +1,7 @@
 {
     "name": "ad5243",
     "version": "0.1.0",
-    "description": "Arduino library to control the AD5243 family of digitial potentiometers / rheostats",
+    "description": "Arduino library to control the AD5243 family of digital potentiometers / rheostats",
     "keywords": [
         "io"
     ],
