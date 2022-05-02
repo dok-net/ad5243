@@ -66,17 +66,17 @@ public:
 		return channel2Data;
 	}
 
-	uint8_t getChannel1Resistance()
+	long getChannel1Resistance()
 	{
 		return computedResistance(channel1Data);
 	}
 
-	uint8_t getChannel2Resistance()
+	long getChannel2Resistance()
 	{
 		return computedResistance(channel2Data);
 	}
 
-	uint32_t computedResistance(const uint8_t data);
+	long computedResistance(const uint8_t data);
 
 	bool setData(uint8_t channel, uint8_t data);
 

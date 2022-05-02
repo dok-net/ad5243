@@ -38,7 +38,7 @@ bool AD5243::connected()
 	}
 }
 
-uint32_t AD5243::computedResistance(const uint8_t data)
+long AD5243::computedResistance(const uint8_t data)
 {
 	return (data * _nominal_resistance) / 256 + 2 * _wiper_resistance;
 }
