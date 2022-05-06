@@ -18,7 +18,8 @@
  * SOFTWARE.
  *
  * Datasheet: https://www.analog.com/en/products/ad5243.html
- * Resistance set is measured between B1 and W1 for channel 0, and B2 and W2 for channel 1
+ * Resistance set is measured between B1 and W1 for channel 0, and B2 and W2
+ * for channel 1
  */
 
 #include "ad5243.h"
@@ -40,7 +41,7 @@ bool AD5243::connected()
 
 long AD5243::computedResistance(const uint8_t data)
 {
-	return (data * _nominal_resistance) / 256 + 2 * _wiper_resistance;
+	return (data * _nominal_resistance + 128) / 256 + 2 * _wiper_resistance;
 }
 
 bool AD5243::setData(uint8_t channel, uint8_t data)
@@ -72,7 +73,10 @@ bool AD5243::setData(uint8_t channel, uint8_t data)
 
 bool AD5243::setResistance(uint8_t channel, const long resistance)
 {
-	const uint8_t data = resistance - 2 * _wiper_resistance > 0 ? (resistance - 2 * _wiper_resistance) * 256 / _nominal_resistance : 0;
+	const uint8_t data = resistance - 2 * _wiper_resistance > 0 ?
+		((resistance - 2 * _wiper_resistance) * 256 + _nominal_resistance / 2)
+			/ _nominal_resistance :
+		0;
 	return setData(channel, data);
 }
 
