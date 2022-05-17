@@ -56,12 +56,12 @@ public:
 
 	bool connected();
 
-	uint8_t getchannel1Data()
+	uint8_t getChannel1Data()
 	{
 		return channel1Data;
 	}
 
-	uint8_t getchannel2Data()
+	uint8_t getChannel2Data()
 	{
 		return channel2Data;
 	}
