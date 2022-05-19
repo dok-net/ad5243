@@ -76,6 +76,9 @@ public:
 		return computedResistance(channel2Data);
 	}
 
+	// Compute resistance for one channel.
+	// According to datasheet, for max data == 255, before wiper resistance,
+	// the greatest selectable resistance value is 255/256th of nominalResistance.
 	long computedResistance(const uint8_t data);
 
 	bool setData(uint8_t channel, uint8_t data);
