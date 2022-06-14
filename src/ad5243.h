@@ -40,15 +40,28 @@ private:
 	uint8_t channel2Data = 0x80;
 
 public:
-	AD5243(long nominal_resistance, TwoWire& i2cPort = Wire) : _nominal_resistance(nominal_resistance), _wiper_resistance(160), _i2cPort(i2cPort)
+	AD5243(long nominal_resistance, TwoWire& i2cPort = Wire, uint8_t address = AD5243_I2C_ADDRESS) :
+		_nominal_resistance(nominal_resistance), _wiper_resistance(160), _i2cPort(i2cPort), _address(address)
 	{
 	}
 
-	AD5243(long nominal_resistance, long wiper_resistance, TwoWire& i2cPort = Wire) : _nominal_resistance(nominal_resistance), _wiper_resistance(wiper_resistance), _i2cPort(i2cPort)
+	AD5243(long nominal_resistance, long wiper_resistance, TwoWire& i2cPort = Wire, uint8_t address = AD5243_I2C_ADDRESS) :
+		_nominal_resistance(nominal_resistance), _wiper_resistance(wiper_resistance), _i2cPort(i2cPort), _address(address)
 	{
 	}
 
-	bool begin(uint8_t address = AD5243_I2C_ADDRESS)
+	AD5243(long nominal_resistance, long wiper_resistance, uint8_t address) :
+		_nominal_resistance(nominal_resistance), _wiper_resistance(wiper_resistance), _i2cPort(Wire), _address(address)
+	{
+	}
+
+	bool begin()
+	{
+		return connected();
+	}
+
+	// overwrite constructor initialized I2C address.
+	bool begin(uint8_t address)
 	{
 		_address = address;
 		return connected();
